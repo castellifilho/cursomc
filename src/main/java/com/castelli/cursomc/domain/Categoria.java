@@ -3,21 +3,25 @@ package com.castelli.cursomc.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity           //Faz o mapeamento objeto/relacional da classe (JPA)
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity           
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id                          //Define a chave primária da tabela
+	@Id                          
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
