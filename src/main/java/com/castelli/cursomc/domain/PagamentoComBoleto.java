@@ -1,15 +1,17 @@
 package com.castelli.cursomc.domain;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import com.castelli.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class PagamentoComBoleto extends Pagamento  {
 	private static final long serialVersionUID = 1L;
 	
-	private Date dataPagamento;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date dataPagamento;	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataVencimento;
 	
 	public PagamentoComBoleto() {}
