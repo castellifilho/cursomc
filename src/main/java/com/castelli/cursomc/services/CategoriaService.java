@@ -2,15 +2,14 @@ package com.castelli.cursomc.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-
 import com.castelli.cursomc.domain.Categoria;
+import com.castelli.cursomc.dto.CategoriaDTO;
 import com.castelli.cursomc.repositories.CategoriaRepository;
 import com.castelli.cursomc.services.exceptions.DataIntegrityException;
 import com.castelli.cursomc.services.exceptions.ObjectNotFoundException;
@@ -27,15 +26,23 @@ public class CategoriaService {
 			"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
+	public Categoria update(Categoria obj) {
+		Categoria newObj = find(obj.getId());
+		updateDate(newObj, obj);
+		return repo.save(newObj);		
+	}
+	
+	private void updateDate(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
+	
+	
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 	
-	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
-	}
+	
 	
 	public void delete(Integer id) {
 		find(id);
@@ -53,6 +60,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Categoria fromDto(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
 		
