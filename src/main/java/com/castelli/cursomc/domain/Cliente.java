@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,8 +25,10 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@Column(unique = true)
 	private String email;
-	private String cpfOuCnpf;
+	private String cpfOuCnpj;
 	private Integer tipo;
 
 	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
@@ -42,12 +44,12 @@ public class Cliente implements Serializable {
 	
 	public Cliente() {}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpf, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.cpfOuCnpf = cpfOuCnpf;
+		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
@@ -75,12 +77,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfOuCnpf() {
-		return cpfOuCnpf;
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCpfOuCnpf(String cpfOuCnpf) {
-		this.cpfOuCnpf = cpfOuCnpf;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public List<Endereco> getEnderecos() {
