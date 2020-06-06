@@ -35,8 +35,7 @@ public class CategoriaService {
 	private void updateDate(Categoria newObj, Categoria obj) {
 		newObj.setNome(obj.getNome());
 	}
-	
-	
+		
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
